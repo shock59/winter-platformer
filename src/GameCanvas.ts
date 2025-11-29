@@ -18,8 +18,8 @@ export default class GameCanvas {
   }
 
   frame() {
-    this.element.width = 1920;
-    this.element.height = 1080;
+    this.element.width = window.innerWidth;
+    this.element.height = window.innerHeight;
     this.ctx.reset();
     this.ctx.imageSmoothingEnabled = false;
 
