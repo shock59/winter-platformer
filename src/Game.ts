@@ -5,6 +5,7 @@ export default class Game {
   canvas: GameCanvas;
   camera: Position;
   movementAxis: number = 0;
+  speed = 0.01;
   lastTime: number;
 
   constructor() {
@@ -29,7 +30,7 @@ export default class Game {
     const delta = Date.now() - this.lastTime;
     this.lastTime = Date.now();
 
-    console.log(this.movementAxis * delta);
+    this.camera.x += this.movementAxis * this.speed * delta;
 
     this.canvas.frame();
 
