@@ -1,4 +1,5 @@
 import GameCanvas from "./GameCanvas";
+import overlapping from "./overlapping";
 
 export default class Game {
   level: (string | undefined)[][];
@@ -8,8 +9,13 @@ export default class Game {
     width: 0.8,
     height: 0.8,
   };
+
   movementAxis: number = 0;
   speed = 0.01;
+
+  gravity: number = 0;
+  gravitySpeed = 0.005;
+
   lastTime: number;
 
   constructor() {
@@ -36,12 +42,39 @@ export default class Game {
 
     this.camera.x += this.movementAxis * this.speed * delta;
 
+    if (this.onGround()) {
+      this.gravity = 0;
+    } else {
+      this.gravity -= this.gravitySpeed;
+      this.camera.y -= this.gravity;
+    }
+
     this.canvas.frame();
 
     requestAnimationFrame(() => this.frame());
   }
 
-  onGround() {}
+  onGround() {
+    const floorRow = Math.floor(this.camera.y + 1);
+    if (this.level[floorRow] === undefined) return false;
+
+    const halfPlayerWidth = this.playerSize.width / 2;
+    const rowEdges: [number, number] = [
+      this.camera.x - halfPlayerWidth,
+      this.camera.x + halfPlayerWidth,
+    ];
+    let groundRange: number[] = [];
+    for (let column = 0; column < this.level[0].length; column++) {
+      const columnEdges: [number, number] = [column - 0.5, column + 0.5];
+      if (overlapping(rowEdges, columnEdges)) groundRange.push(column);
+    }
+
+    const tiles = groundRange.map((column) => this.level[floorRow][column]);
+    if (!tiles.find((tile) => tile !== undefined)) return false;
+
+    const bottomEdge = this.camera.y + this.playerSize.height / 2;
+    return bottomEdge >= floorRow - 0.5 && bottomEdge <= floorRow + 0.5;
+  }
 
   keyDown(event: KeyboardEvent) {
     if (event.key == "ArrowRight") this.movementAxis = 1;
