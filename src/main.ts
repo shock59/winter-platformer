@@ -1,6 +1,6 @@
-import GameCanvas from "./GameCanvas";
+import Game from "./Game";
 import "./style.css";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
-const gameCanvas = new GameCanvas();
-app.appendChild(gameCanvas.element);
+const game = new Game();
+app.appendChild(game.canvas.element);

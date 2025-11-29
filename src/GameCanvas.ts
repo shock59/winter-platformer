@@ -1,8 +1,16 @@
+import type Game from "./Game";
+
 export default class GameCanvas {
+  game: Game;
+
   element: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
 
-  constructor() {
+  tileSize = 32;
+
+  constructor(game: Game) {
+    this.game = game;
+
     this.element = document.createElement("canvas");
     this.ctx = this.element.getContext("2d")!;
 
@@ -14,13 +22,17 @@ export default class GameCanvas {
     this.element.height = window.innerHeight;
 
     this.ctx.reset();
-    this.ctx.fillStyle = "red";
-    this.ctx.fillRect(
-      window.innerWidth / 2 - 50,
-      window.innerHeight / 2 - 50,
-      100,
-      100
-    );
+    for (const [rowIndex, row] of this.game.level.entries()) {
+      for (const [columnIndex, tile] of row.entries()) {
+        this.ctx.fillStyle = tile;
+        this.ctx.fillRect(
+          columnIndex * this.tileSize,
+          rowIndex * this.tileSize,
+          this.tileSize,
+          this.tileSize
+        );
+      }
+    }
 
     requestAnimationFrame(() => this.frame());
   }
