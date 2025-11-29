@@ -2,7 +2,10 @@ import GameCanvas from "./GameCanvas";
 
 export default class Game {
   level: (string | undefined)[][];
+
   canvas: GameCanvas;
+
+  camera: Position;
 
   constructor() {
     this.level = new Array(9)
@@ -12,5 +15,7 @@ export default class Game {
       );
 
     this.canvas = new GameCanvas(this);
+
+    this.camera = { x: 0, y: 7 };
   }
 }

@@ -45,13 +45,29 @@ export default class GameCanvas {
           0,
           16,
           16,
-          columnIndex * scale,
-          rowIndex * scale,
+          (columnIndex - this.game.camera.x + this.viewDimensions[0] / 2 - 1) *
+            scale,
+          (rowIndex - this.game.camera.y + this.viewDimensions[1] / 2 + 0) *
+            scale,
           scale,
           scale
         );
       }
     }
+
+    const image = new Image();
+    image.src = `assets/player.png`;
+    this.ctx.drawImage(
+      image,
+      0,
+      0,
+      16,
+      16,
+      (this.viewDimensions[0] / 2 - 1) * scale,
+      (this.viewDimensions[1] / 2 + 0) * scale,
+      scale,
+      scale
+    );
 
     requestAnimationFrame(() => this.frame());
   }
