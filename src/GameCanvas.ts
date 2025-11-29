@@ -54,8 +54,8 @@ export default class GameCanvas {
       image,
       (this.viewDimensions[0] / 2 - 1) * scale,
       (this.viewDimensions[1] / 2 + 0) * scale,
-      scale,
-      scale
+      scale * (this.game.playerSize.width / this.tileSize),
+      scale * (this.game.playerSize.height / this.tileSize)
     );
   }
 }

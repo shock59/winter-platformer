@@ -4,6 +4,10 @@ export default class Game {
   level: (string | undefined)[][];
   canvas: GameCanvas;
   camera: Position;
+  playerSize = {
+    width: 14,
+    height: 14,
+  };
   movementAxis: number = 0;
   speed = 0.01;
   lastTime: number;
@@ -36,6 +40,8 @@ export default class Game {
 
     requestAnimationFrame(() => this.frame());
   }
+
+  onGround() {}
 
   keyDown(event: KeyboardEvent) {
     if (event.key == "ArrowRight") this.movementAxis = 1;
