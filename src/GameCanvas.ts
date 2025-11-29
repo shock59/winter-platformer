@@ -21,7 +21,6 @@ export default class GameCanvas {
       [window.innerWidth, this.viewDimensions[0]],
       [window.innerHeight, this.viewDimensions[1]],
     ].toSorted((a, b) => a[0] / a[1] - b[0] / b[1])[0];
-    console.log(minDimension[0] == window.innerWidth);
 
     const scale = Math.floor(minDimension[0] / minDimension[1]);
 
