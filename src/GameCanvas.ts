@@ -6,7 +6,7 @@ export default class GameCanvas {
   element: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
 
-  tileSize = 32;
+  tileSize = (16 / 1) * 4;
 
   constructor(game: Game) {
     this.game = game;
@@ -18,14 +18,23 @@ export default class GameCanvas {
   }
 
   frame() {
-    this.element.width = window.innerWidth;
-    this.element.height = window.innerHeight;
-
+    this.element.width = 1920;
+    this.element.height = 1080;
     this.ctx.reset();
+    this.ctx.imageSmoothingEnabled = false;
+
     for (const [rowIndex, row] of this.game.level.entries()) {
       for (const [columnIndex, tile] of row.entries()) {
-        this.ctx.fillStyle = tile;
-        this.ctx.fillRect(
+        if (tile == undefined) continue;
+
+        const image = new Image();
+        image.src = `assets/ground.png`;
+        this.ctx.drawImage(
+          image,
+          0,
+          0,
+          16,
+          16,
           columnIndex * this.tileSize,
           rowIndex * this.tileSize,
           this.tileSize,
