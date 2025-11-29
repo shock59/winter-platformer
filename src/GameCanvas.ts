@@ -38,9 +38,12 @@ export default class GameCanvas {
         image.src = `assets/${tile}.png`;
         this.ctx.drawImage(
           image,
-          (columnIndex - this.game.camera.x + this.viewDimensions[0] / 2 - 1) *
+          (columnIndex -
+            this.game.camera.x +
+            this.viewDimensions[0] / 2 -
+            0.5) *
             scale,
-          (rowIndex - this.game.camera.y + this.viewDimensions[1] / 2 + 0) *
+          (rowIndex - this.game.camera.y + this.viewDimensions[1] / 2 - 0.5) *
             scale,
           scale,
           scale
@@ -52,10 +55,10 @@ export default class GameCanvas {
     image.src = `assets/player.png`;
     this.ctx.drawImage(
       image,
-      (this.viewDimensions[0] / 2 - 1) * scale,
-      (this.viewDimensions[1] / 2 + 0) * scale,
-      scale * (this.game.playerSize.width / this.tileSize),
-      scale * (this.game.playerSize.height / this.tileSize)
+      (this.viewDimensions[0] / 2 - this.game.playerSize.width / 2) * scale,
+      (this.viewDimensions[1] / 2 - this.game.playerSize.height / 2) * scale,
+      scale * this.game.playerSize.width,
+      scale * this.game.playerSize.height
     );
   }
 }

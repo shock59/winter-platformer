@@ -5,8 +5,8 @@ export default class Game {
   canvas: GameCanvas;
   camera: Position;
   playerSize = {
-    width: 14,
-    height: 14,
+    width: 0.8,
+    height: 0.8,
   };
   movementAxis: number = 0;
   speed = 0.01;
