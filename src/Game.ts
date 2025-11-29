@@ -9,6 +9,8 @@ export default class Game {
 
   movementAxis: number = 0;
 
+  lastTime: number;
+
   constructor() {
     this.level = new Array(9)
       .fill(1)
@@ -23,11 +25,15 @@ export default class Game {
     document.addEventListener("keydown", (e) => this.keyDown(e));
     document.addEventListener("keyup", (e) => this.keyUp(e));
 
+    this.lastTime = Date.now();
     requestAnimationFrame(() => this.frame());
   }
 
   frame() {
-    console.log(this.movementAxis);
+    const delta = Date.now() - this.lastTime;
+    this.lastTime = Date.now();
+
+    console.log(this.movementAxis * delta);
 
     this.canvas.frame();
 
