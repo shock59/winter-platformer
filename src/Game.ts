@@ -2,13 +2,9 @@ import GameCanvas from "./GameCanvas";
 
 export default class Game {
   level: (string | undefined)[][];
-
   canvas: GameCanvas;
-
   camera: Position;
-
   movementAxis: number = 0;
-
   lastTime: number;
 
   constructor() {
