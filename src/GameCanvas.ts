@@ -14,8 +14,6 @@ export default class GameCanvas {
 
     this.element = document.createElement("canvas");
     this.ctx = this.element.getContext("2d")!;
-
-    requestAnimationFrame(() => this.frame());
   }
 
   frame() {
@@ -68,7 +66,5 @@ export default class GameCanvas {
       scale,
       scale
     );
-
-    requestAnimationFrame(() => this.frame());
   }
 }

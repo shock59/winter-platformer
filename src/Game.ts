@@ -17,5 +17,12 @@ export default class Game {
     this.canvas = new GameCanvas(this);
 
     this.camera = { x: 0, y: 7 };
+
+    requestAnimationFrame(() => this.frame());
+  }
+
+  frame() {
+    this.canvas.frame();
+    requestAnimationFrame(() => this.frame());
   }
 }
