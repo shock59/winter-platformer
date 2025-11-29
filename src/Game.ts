@@ -5,10 +5,10 @@ export default class Game {
   canvas: GameCanvas;
 
   constructor() {
-    this.level = new Array(16)
+    this.level = new Array(9)
       .fill(1)
       .map((_, row) =>
-        new Array(16).fill(1).map(() => (row == 14 ? "ground" : undefined))
+        new Array(16).fill(1).map(() => (row == 8 ? "ground" : undefined))
       );
 
     this.canvas = new GameCanvas(this);

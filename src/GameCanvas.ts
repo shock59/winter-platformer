@@ -6,7 +6,8 @@ export default class GameCanvas {
   element: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
 
-  tileSize = (16 / 1) * 4;
+  tileSize = 16;
+  viewDimensions = [16, 9];
 
   constructor(game: Game) {
     this.game = game;
@@ -18,8 +19,17 @@ export default class GameCanvas {
   }
 
   frame() {
-    this.element.width = window.innerWidth;
-    this.element.height = window.innerHeight;
+    const minDimension = [
+      [window.innerWidth, this.viewDimensions[0]],
+      [window.innerHeight, this.viewDimensions[1]],
+    ].toSorted((a, b) => a[0] / a[1] - b[0] / b[1])[0];
+    console.log(minDimension[0] == window.innerWidth);
+
+    const scale = Math.floor(minDimension[0] / minDimension[1]);
+
+    this.element.width = scale * this.viewDimensions[0];
+    this.element.height = scale * this.viewDimensions[1];
+
     this.ctx.reset();
     this.ctx.imageSmoothingEnabled = false;
 
@@ -35,10 +45,10 @@ export default class GameCanvas {
           0,
           16,
           16,
-          columnIndex * this.tileSize,
-          rowIndex * this.tileSize,
-          this.tileSize,
-          this.tileSize
+          columnIndex * scale,
+          rowIndex * scale,
+          scale,
+          scale
         );
       }
     }
