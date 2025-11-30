@@ -14,6 +14,7 @@ export default class Game {
   movementAxis: number = 0;
   speed = 0.01;
 
+  jumpQueued: boolean = false;
   gravity: number = 0;
   gravitySpeed = 0.005;
 
@@ -50,10 +51,12 @@ export default class Game {
       this.gravity = 0;
       this.camera.y =
         Math.floor(this.camera.y) + (1 - this.playerSize.height) / 2;
+      if (this.jumpQueued) this.gravity = 0.18;
     } else {
       this.gravity -= this.gravitySpeed;
-      this.camera.y -= this.gravity;
     }
+    this.jumpQueued = false;
+    this.camera.y -= this.gravity;
 
     this.canvas.frame(delta);
 
@@ -85,6 +88,7 @@ export default class Game {
   keyDown(event: KeyboardEvent) {
     if (event.key == "ArrowRight") this.movementAxis = 1;
     else if (event.key == "ArrowLeft") this.movementAxis = -1;
+    else if (event.key == "c") this.jumpQueued = true;
   }
 
   keyUp(event: KeyboardEvent) {
