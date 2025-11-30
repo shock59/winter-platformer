@@ -1,6 +1,6 @@
 const tileSize = 16;
 
-const atlasPositions: Record<string, AtlasPosition[]> = Object.fromEntries(
+const tiles: Record<string, AtlasPosition[]> = Object.fromEntries(
   Object.entries({
     groundLeft: [[0, 0]],
     groundMiddle: [[1, 0]],
@@ -38,4 +38,4 @@ const atlasPositions: Record<string, AtlasPosition[]> = Object.fromEntries(
   ])
 );
 
-export default atlasPositions;
+export default tiles;

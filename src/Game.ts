@@ -1,5 +1,5 @@
 import GameCanvas from "./GameCanvas";
-import atlasPositions from "./atlasPositions";
+import tiles from "./tiles";
 import overlapping from "./overlapping";
 
 export default class Game {
@@ -25,9 +25,9 @@ export default class Game {
       .map((_, row) =>
         new Array(16)
           .fill(1)
-          .map(() => (row == 8 ? atlasPositions.groundMiddle : undefined))
+          .map(() => (row == 8 ? tiles.groundMiddle : undefined))
       );
-    this.level[7][15] = atlasPositions.flag;
+    this.level[7][15] = tiles.flag;
 
     this.canvas = new GameCanvas(this);
 
