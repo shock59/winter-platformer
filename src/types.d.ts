@@ -3,4 +3,4 @@ type Position = {
   y: number;
 };
 
-type AtlasPosition = [number, number, number];
+type AtlasPosition = [number, number];

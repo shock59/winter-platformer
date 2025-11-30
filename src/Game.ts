@@ -3,7 +3,7 @@ import atlasPositions from "./atlasPositions";
 import overlapping from "./overlapping";
 
 export default class Game {
-  level: (AtlasPosition | undefined)[][];
+  level: (AtlasPosition[] | undefined)[][];
   canvas: GameCanvas;
   camera: Position;
   playerSize = {
@@ -27,6 +27,7 @@ export default class Game {
           .fill(1)
           .map(() => (row == 8 ? atlasPositions.groundMiddle : undefined))
       );
+    this.level[7][15] = atlasPositions.flag;
 
     this.canvas = new GameCanvas(this);
 
@@ -54,7 +55,7 @@ export default class Game {
       this.camera.y -= this.gravity;
     }
 
-    this.canvas.frame();
+    this.canvas.frame(delta);
 
     requestAnimationFrame(() => this.frame());
   }

@@ -10,6 +10,9 @@ export default class GameCanvas {
   tileSize = 16;
   viewDimensions = [16, 9];
 
+  animationFrame: number = 0;
+  animationSpeed = 125;
+
   constructor(game: Game) {
     this.game = game;
 
@@ -20,7 +23,7 @@ export default class GameCanvas {
     this.image.src = "assets/atlas.png";
   }
 
-  frame() {
+  frame(delta: number) {
     const minDimension = [
       [window.innerWidth, this.viewDimensions[0]],
       [window.innerHeight, this.viewDimensions[1]],
@@ -34,16 +37,20 @@ export default class GameCanvas {
     this.ctx.reset();
     this.ctx.imageSmoothingEnabled = false;
 
+    this.animationFrame += delta / this.animationSpeed;
+
     for (const [rowIndex, row] of this.game.level.entries()) {
       for (const [columnIndex, tile] of row.entries()) {
         if (tile == undefined) continue;
 
+        const animationFrame =
+          tile[Math.floor(this.animationFrame) % tile.length];
         this.ctx.drawImage(
           this.image,
-          tile[0],
-          tile[1],
-          tile[2],
-          tile[2],
+          animationFrame[0],
+          animationFrame[1],
+          this.tileSize,
+          this.tileSize,
           (columnIndex -
             this.game.camera.x +
             this.viewDimensions[0] / 2 -
