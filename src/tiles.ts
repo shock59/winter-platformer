@@ -34,6 +34,7 @@ const tiles: Record<string, AtlasPosition[]> = Object.fromEntries(
   }).map((entry) => [
     entry[0],
     entry[1].map((position) => [
+      // Account for extruded tiles
       position[0] * (tileSize + 2) + 1,
       position[1] * (tileSize + 2) + 1,
     ]),

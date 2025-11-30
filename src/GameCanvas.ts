@@ -11,7 +11,7 @@ export default class GameCanvas {
   viewDimensions = [16, 9];
 
   animationFrame: number = 0;
-  animationSpeed = 125;
+  animationSpeed = 125; // ms per frame
 
   constructor(game: Game) {
     this.game = game;
