@@ -47,6 +47,8 @@ export default class Game {
 
     if (this.onGround()) {
       this.gravity = 0;
+      this.camera.y =
+        Math.floor(this.camera.y) + (1 - this.playerSize.height) / 2;
     } else {
       this.gravity -= this.gravitySpeed;
       this.camera.y -= this.gravity;
