@@ -13,6 +13,7 @@ export default class Game {
   };
 
   movementAxis: number = 0;
+  movementKeysDown: string[] = [];
   speed = 0.01;
 
   jumpQueued: boolean = false;
@@ -95,12 +96,24 @@ export default class Game {
   }
 
   keyDown(event: KeyboardEvent) {
-    if (event.key == "ArrowRight") this.movementAxis = 1;
-    else if (event.key == "ArrowLeft") this.movementAxis = -1;
-    else if (event.key == "c") this.jumpQueued = true;
+    if (event.key == "ArrowRight") {
+      this.movementAxis = 1;
+      if (!this.movementKeysDown.includes(event.key))
+        this.movementKeysDown.push(event.key);
+    } else if (event.key == "ArrowLeft") {
+      this.movementAxis = -1;
+      if (!this.movementKeysDown.includes(event.key))
+        this.movementKeysDown.push(event.key);
+    } else if (event.key == "c") this.jumpQueued = true;
   }
 
   keyUp(event: KeyboardEvent) {
-    if (["ArrowRight", "ArrowLeft"].includes(event.key)) this.movementAxis = 0;
+    if (["ArrowRight", "ArrowLeft"].includes(event.key)) {
+      this.movementKeysDown.splice(this.movementKeysDown.indexOf(event.key), 1);
+      if (this.movementKeysDown.includes("ArrowRight")) this.movementAxis = 1;
+      else if (this.movementKeysDown.includes("ArrowLeft"))
+        this.movementAxis = -1;
+      else this.movementAxis = 0;
+    }
   }
 }
