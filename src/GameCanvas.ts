@@ -58,8 +58,8 @@ export default class GameCanvas {
             scale,
           (rowIndex - this.game.camera.y + this.viewDimensions[1] / 2 - 0.5) *
             scale,
-          scale,
-          scale
+          scale * 1.005,
+          scale * 1.005
         );
       }
     }

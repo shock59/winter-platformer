@@ -34,8 +34,8 @@ const tiles: Record<string, AtlasPosition[]> = Object.fromEntries(
   }).map((entry) => [
     entry[0],
     entry[1].map((position) => [
-      position[0] * tileSize,
-      position[1] * tileSize,
+      position[0] * (tileSize + 2) + 1,
+      position[1] * (tileSize + 2) + 1,
     ]),
   ])
 );
