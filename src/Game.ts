@@ -1,6 +1,7 @@
 import GameCanvas from "./GameCanvas";
 import tiles from "./tiles";
 import overlapping from "./overlapping";
+import setCameraOffset from "./setCameraOffset";
 
 export default class Game {
   level: (AtlasPosition[] | undefined)[][];
@@ -15,6 +16,16 @@ export default class Game {
   cameraOffset: Position = {
     x: 0,
     y: 0,
+  };
+  cameraBounds = {
+    x: {
+      min: -2,
+      max: 22,
+    },
+    y: {
+      min: -20,
+      max: 8.5,
+    },
   };
 
   movementAxis: number = 0;
@@ -49,7 +60,7 @@ export default class Game {
 
     this.canvas = new GameCanvas(this);
 
-    this.playerPosition = { x: 0, y: 7 };
+    this.playerPosition = { x: 1, y: 7 };
 
     document.addEventListener("keydown", (e) => this.keyDown(e));
     document.addEventListener("keyup", (e) => this.keyUp(e));
@@ -99,6 +110,19 @@ export default class Game {
     this.jumpQueued = false;
     this.playerPosition.y -= this.gravity;
 
+    const halfViewDimensions = this.canvas.viewDimensions.map(
+      (dimension) => dimension / 2
+    );
+    this.cameraOffset.x = setCameraOffset(
+      this.playerPosition.x,
+      halfViewDimensions[0],
+      this.cameraBounds.x
+    );
+    this.cameraOffset.y = setCameraOffset(
+      this.playerPosition.y,
+      halfViewDimensions[1],
+      this.cameraBounds.y
+    );
     this.canvas.frame(delta);
 
     requestAnimationFrame(() => this.frame());
