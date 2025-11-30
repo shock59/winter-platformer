@@ -37,7 +37,7 @@ export default class Game {
   jumpQueued: boolean = false;
   jumpHeight = 0.18;
   gravity: number = 0;
-  gravitySpeed = 0.005;
+  gravitySpeed = 0.0008;
 
   lastTime: number;
 
@@ -105,7 +105,7 @@ export default class Game {
         Math.floor(this.playerPosition.y) + (1 - this.playerSize.height) / 2;
       if (this.jumpQueued) this.gravity = this.jumpHeight;
     } else {
-      this.gravity -= this.gravitySpeed;
+      this.gravity -= this.gravitySpeed * delta;
     }
     this.jumpQueued = false;
     this.playerPosition.y -= this.gravity;
