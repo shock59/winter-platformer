@@ -52,11 +52,14 @@ export default class GameCanvas {
           this.tileSize,
           this.tileSize,
           (columnIndex -
-            this.game.camera.x +
+            this.game.playerPosition.x +
             this.viewDimensions[0] / 2 -
             0.5) *
             scale,
-          (rowIndex - this.game.camera.y + this.viewDimensions[1] / 2 - 0.5) *
+          (rowIndex -
+            this.game.playerPosition.y +
+            this.viewDimensions[1] / 2 -
+            0.5) *
             scale,
           scale * 1.005,
           scale * 1.005

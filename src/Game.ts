@@ -5,7 +5,8 @@ import overlapping from "./overlapping";
 export default class Game {
   level: (AtlasPosition[] | undefined)[][];
   canvas: GameCanvas;
-  camera: Position;
+
+  playerPosition: Position;
   playerSize = {
     width: 0.8,
     height: 0.8,
@@ -33,7 +34,7 @@ export default class Game {
 
     this.canvas = new GameCanvas(this);
 
-    this.camera = { x: 0, y: 7 };
+    this.playerPosition = { x: 0, y: 7 };
 
     document.addEventListener("keydown", (e) => this.keyDown(e));
     document.addEventListener("keyup", (e) => this.keyUp(e));
@@ -46,18 +47,18 @@ export default class Game {
     const delta = Date.now() - this.lastTime;
     this.lastTime = Date.now();
 
-    this.camera.x += this.movementAxis * this.speed * delta;
+    this.playerPosition.x += this.movementAxis * this.speed * delta;
 
     if (this.onGround()) {
       this.gravity = 0;
-      this.camera.y =
-        Math.floor(this.camera.y) + (1 - this.playerSize.height) / 2;
+      this.playerPosition.y =
+        Math.floor(this.playerPosition.y) + (1 - this.playerSize.height) / 2;
       if (this.jumpQueued) this.gravity = this.jumpHeight;
     } else {
       this.gravity -= this.gravitySpeed;
     }
     this.jumpQueued = false;
-    this.camera.y -= this.gravity;
+    this.playerPosition.y -= this.gravity;
 
     this.canvas.frame(delta);
 
@@ -65,13 +66,13 @@ export default class Game {
   }
 
   onGround() {
-    const floorRow = Math.floor(this.camera.y + 1);
+    const floorRow = Math.floor(this.playerPosition.y + 1);
     if (this.level[floorRow] === undefined) return false;
 
     const halfPlayerWidth = this.playerSize.width / 2;
     const rowEdges: [number, number] = [
-      this.camera.x - halfPlayerWidth,
-      this.camera.x + halfPlayerWidth,
+      this.playerPosition.x - halfPlayerWidth,
+      this.playerPosition.x + halfPlayerWidth,
     ];
     let groundRange: number[] = [];
     for (let column = 0; column < this.level[0].length; column++) {
@@ -82,7 +83,7 @@ export default class Game {
     const tiles = groundRange.map((column) => this.level[floorRow][column]);
     if (!tiles.find((tile) => tile !== undefined)) return false;
 
-    const bottomEdge = this.camera.y + this.playerSize.height / 2;
+    const bottomEdge = this.playerPosition.y + this.playerSize.height / 2;
     return bottomEdge >= floorRow - 0.5 && bottomEdge <= floorRow + 0.5;
   }
 
