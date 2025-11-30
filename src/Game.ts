@@ -15,6 +15,7 @@ export default class Game {
   speed = 0.01;
 
   jumpQueued: boolean = false;
+  jumpHeight = 0.18;
   gravity: number = 0;
   gravitySpeed = 0.005;
 
@@ -51,7 +52,7 @@ export default class Game {
       this.gravity = 0;
       this.camera.y =
         Math.floor(this.camera.y) + (1 - this.playerSize.height) / 2;
-      if (this.jumpQueued) this.gravity = 0.18;
+      if (this.jumpQueued) this.gravity = this.jumpHeight;
     } else {
       this.gravity -= this.gravitySpeed;
     }
