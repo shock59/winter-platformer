@@ -52,12 +52,14 @@ export default class GameCanvas {
           this.tileSize,
           this.tileSize,
           (columnIndex -
-            this.game.playerPosition.x +
+            this.game.playerPosition.x -
+            this.game.cameraOffset.x +
             this.viewDimensions[0] / 2 -
             0.5) *
             scale,
           (rowIndex -
-            this.game.playerPosition.y +
+            this.game.playerPosition.y -
+            this.game.cameraOffset.y +
             this.viewDimensions[1] / 2 -
             0.5) *
             scale,
@@ -71,8 +73,14 @@ export default class GameCanvas {
     image.src = `assets/player.png`;
     this.ctx.drawImage(
       image,
-      (this.viewDimensions[0] / 2 - this.game.playerSize.width / 2) * scale,
-      (this.viewDimensions[1] / 2 - this.game.playerSize.height / 2) * scale,
+      (this.viewDimensions[0] / 2 -
+        this.game.playerSize.width / 2 -
+        this.game.cameraOffset.x) *
+        scale,
+      (this.viewDimensions[1] / 2 -
+        this.game.playerSize.height / 2 -
+        this.game.cameraOffset.y) *
+        scale,
       scale * this.game.playerSize.width,
       scale * this.game.playerSize.height
     );

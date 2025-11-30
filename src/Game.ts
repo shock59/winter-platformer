@@ -12,6 +12,11 @@ export default class Game {
     height: 0.8,
   };
 
+  cameraOffset: Position = {
+    x: 0,
+    y: 0,
+  };
+
   movementAxis: number = 0;
   movementKeysDown: string[] = [];
   movementMomentum: number = 0;
