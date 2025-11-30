@@ -1,8 +1,9 @@
 import GameCanvas from "./GameCanvas";
+import atlasPositions from "./atlasPositions";
 import overlapping from "./overlapping";
 
 export default class Game {
-  level: (string | undefined)[][];
+  level: (AtlasPosition | undefined)[][];
   canvas: GameCanvas;
   camera: Position;
   playerSize = {
@@ -22,7 +23,9 @@ export default class Game {
     this.level = new Array(9)
       .fill(1)
       .map((_, row) =>
-        new Array(16).fill(1).map(() => (row == 8 ? "ground" : undefined))
+        new Array(16)
+          .fill(1)
+          .map(() => (row == 8 ? atlasPositions.groundMiddle : undefined))
       );
 
     this.canvas = new GameCanvas(this);

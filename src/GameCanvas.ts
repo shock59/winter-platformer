@@ -5,6 +5,7 @@ export default class GameCanvas {
 
   element: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
+  image: HTMLImageElement;
 
   tileSize = 16;
   viewDimensions = [16, 9];
@@ -14,6 +15,9 @@ export default class GameCanvas {
 
     this.element = document.createElement("canvas");
     this.ctx = this.element.getContext("2d")!;
+
+    this.image = new Image();
+    this.image.src = "assets/atlas.png";
   }
 
   frame() {
@@ -34,10 +38,12 @@ export default class GameCanvas {
       for (const [columnIndex, tile] of row.entries()) {
         if (tile == undefined) continue;
 
-        const image = new Image();
-        image.src = `assets/${tile}.png`;
         this.ctx.drawImage(
-          image,
+          this.image,
+          tile[0],
+          tile[1],
+          tile[2],
+          tile[2],
           (columnIndex -
             this.game.camera.x +
             this.viewDimensions[0] / 2 -
