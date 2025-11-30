@@ -7,9 +7,9 @@ const tiles: Record<string, AtlasPosition[]> = Object.fromEntries(
     groundRight: [[2, 0]],
     groundBottom: [[3, 0]],
     crate: [[4, 0]],
-    platform: [[5, 0]],
-    tree: [[6, 0]],
-    bush: [[7, 0]],
+    platformLeft: [[5, 0]],
+    platformMiddle: [[6, 0]],
+    platformRight: [[7, 0]],
     water: [
       [0, 1],
       [1, 1],
@@ -29,6 +29,8 @@ const tiles: Record<string, AtlasPosition[]> = Object.fromEntries(
       [5, 2],
       [6, 2],
     ],
+    tree: [[0, 3]],
+    bush: [[1, 3]],
   }).map((entry) => [
     entry[0],
     entry[1].map((position) => [
