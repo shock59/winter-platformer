@@ -23,13 +23,20 @@ export default class Game {
   lastTime: number;
 
   constructor() {
-    this.level = new Array(9)
-      .fill(1)
-      .map((_, row) =>
-        new Array(16)
-          .fill(1)
-          .map(() => (row == 8 ? tiles.groundMiddle : undefined))
-      );
+    this.level = [
+      ...new Array(7).fill(new Array(20).fill(undefined)),
+      [
+        ...new Array(15).fill(undefined),
+        tiles.flag,
+        ...new Array(4).fill(undefined),
+      ],
+      [
+        tiles.groundLeft,
+        ...new Array(18).fill(tiles.groundMiddle),
+        tiles.groundRight,
+      ],
+      ...new Array(7).fill(new Array(20).fill(tiles.groundBottom)),
+    ];
     this.level[7][15] = tiles.flag;
 
     this.canvas = new GameCanvas(this);
