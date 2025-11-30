@@ -14,7 +14,9 @@ export default class Game {
 
   movementAxis: number = 0;
   movementKeysDown: string[] = [];
-  movementSpeed = 0.01;
+  movementMomentum: number = 0;
+  movementBuildSpeed = 0.00006;
+  movementMaxSpeed = 0.01;
 
   jumpQueued: boolean = false;
   jumpHeight = 0.18;
@@ -55,7 +57,31 @@ export default class Game {
     const delta = Date.now() - this.lastTime;
     this.lastTime = Date.now();
 
-    this.playerPosition.x += this.movementAxis * this.movementSpeed * delta;
+    this.movementAxis = 0;
+    if (this.movementKeysDown.includes("ArrowRight")) this.movementAxis += 1;
+    if (this.movementKeysDown.includes("ArrowLeft")) this.movementAxis -= 1;
+
+    if (this.movementAxis != 0) {
+      this.movementMomentum +=
+        this.movementAxis * this.movementBuildSpeed * delta;
+      if (Math.abs(this.movementMomentum) >= this.movementMaxSpeed) {
+        this.movementMomentum =
+          this.movementMaxSpeed *
+          (this.movementMomentum / Math.abs(this.movementMomentum));
+      }
+    } else if (this.movementMomentum != 0) {
+      const startingAxis =
+        this.movementMomentum / Math.abs(this.movementMomentum);
+      this.movementMomentum -= this.movementBuildSpeed * startingAxis * delta;
+      if (
+        this.movementMomentum / Math.abs(this.movementMomentum) !=
+        startingAxis
+      ) {
+        this.movementMomentum = 0;
+      }
+    }
+
+    this.playerPosition.x += this.movementMomentum * delta;
 
     if (this.onGround()) {
       this.gravity = 0;
@@ -96,24 +122,17 @@ export default class Game {
   }
 
   keyDown(event: KeyboardEvent) {
-    if (event.key == "ArrowRight") {
-      this.movementAxis = 1;
-      if (!this.movementKeysDown.includes(event.key))
-        this.movementKeysDown.push(event.key);
-    } else if (event.key == "ArrowLeft") {
-      this.movementAxis = -1;
-      if (!this.movementKeysDown.includes(event.key))
-        this.movementKeysDown.push(event.key);
+    if (
+      ["ArrowRight", "ArrowLeft"].includes(event.key) &&
+      !this.movementKeysDown.includes(event.key)
+    ) {
+      this.movementKeysDown.push(event.key);
     } else if (event.key == "c") this.jumpQueued = true;
   }
 
   keyUp(event: KeyboardEvent) {
     if (["ArrowRight", "ArrowLeft"].includes(event.key)) {
       this.movementKeysDown.splice(this.movementKeysDown.indexOf(event.key), 1);
-      if (this.movementKeysDown.includes("ArrowRight")) this.movementAxis = 1;
-      else if (this.movementKeysDown.includes("ArrowLeft"))
-        this.movementAxis = -1;
-      else this.movementAxis = 0;
     }
   }
 }
