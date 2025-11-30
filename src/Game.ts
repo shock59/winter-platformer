@@ -14,7 +14,7 @@ export default class Game {
 
   movementAxis: number = 0;
   movementKeysDown: string[] = [];
-  speed = 0.01;
+  movementSpeed = 0.01;
 
   jumpQueued: boolean = false;
   jumpHeight = 0.18;
@@ -55,7 +55,7 @@ export default class Game {
     const delta = Date.now() - this.lastTime;
     this.lastTime = Date.now();
 
-    this.playerPosition.x += this.movementAxis * this.speed * delta;
+    this.playerPosition.x += this.movementAxis * this.movementSpeed * delta;
 
     if (this.onGround()) {
       this.gravity = 0;
