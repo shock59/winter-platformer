@@ -1,4 +1,5 @@
 import type Game from "./Game";
+import tiles from "./tiles";
 
 export default class GameCanvas {
   game: Game;
@@ -12,6 +13,9 @@ export default class GameCanvas {
 
   animationFrame: number = 0;
   animationSpeed = 125; // ms per frame
+
+  snowflakes: Position[] = [];
+  nextSnowflakeSpawnFrame: number = 1;
 
   constructor(game: Game) {
     this.game = game;
@@ -38,6 +42,27 @@ export default class GameCanvas {
     this.ctx.imageSmoothingEnabled = false;
 
     this.animationFrame += delta / this.animationSpeed;
+
+    if (this.animationFrame > this.nextSnowflakeSpawnFrame) {
+      this.nextSnowflakeSpawnFrame += Math.floor(Math.random() * 5 + 10);
+      this.snowflakes.push({ x: Math.random() * this.viewDimensions[0], y: 0 });
+    }
+    for (const snowflakeIndex in this.snowflakes) {
+      const snowflake = this.snowflakes[snowflakeIndex];
+
+      this.ctx.drawImage(
+        this.image,
+        ...tiles.snowflake[0],
+        this.tileSize,
+        this.tileSize,
+        snowflake.x * scale,
+        snowflake.y * scale,
+        scale,
+        scale
+      );
+
+      this.snowflakes[snowflakeIndex].y += delta / 500;
+    }
 
     this.drawLevel(this.game.background, scale);
     this.drawLevel(this.game.level, scale);

@@ -31,6 +31,7 @@ const tiles: Record<string, AtlasPosition[]> = Object.fromEntries(
     ],
     tree: [[0, 3]],
     bush: [[1, 3]],
+    snowflake: [[2, 3]],
   }).map((entry) => [
     entry[0],
     entry[1].map((position) => [
