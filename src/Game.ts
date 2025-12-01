@@ -42,6 +42,7 @@ export default class Game {
   gravitySpeed = 0.0008;
 
   lastTime: number;
+  gameRunning: boolean = true;
 
   constructor() {
     this.level = level;
@@ -59,6 +60,8 @@ export default class Game {
   }
 
   frame() {
+    if (!this.gameRunning) return;
+
     const delta = Date.now() - this.lastTime;
     this.lastTime = Date.now();
 
@@ -113,6 +116,7 @@ export default class Game {
         if (overlapping(playerVerticalEdges, tileVerticalEdges)) {
           if (tile[0] == tiles.flag[0]) {
             alert("You win!");
+            this.gameRunning = false;
           } else {
             if (this.movementMomentum > 0)
               this.playerPosition.x = column - 0.5 - halfPlayerWidth;
