@@ -46,7 +46,10 @@ export default class GameCanvas {
 
     if (this.animationFrame > this.nextSnowflakeSpawnFrame) {
       this.nextSnowflakeSpawnFrame += Math.floor(Math.random() * 5 + 10);
-      this.snowflakes.push({ x: Math.random() * this.viewDimensions[0], y: 0 });
+      this.snowflakes.push({
+        x: Math.random() * this.viewDimensions[0],
+        y: -1,
+      });
     }
     for (const snowflakeIndex in this.snowflakes) {
       const snowflake = this.snowflakes[snowflakeIndex];
