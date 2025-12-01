@@ -72,7 +72,7 @@ export default class GameCanvas {
     this.drawLevel(this.game.level, scale);
 
     const image = new Image();
-    image.src = `assets/player.png`;
+    image.src = "assets/player.png";
     this.ctx.drawImage(
       image,
       (this.viewDimensions[0] / 2 -
