@@ -137,7 +137,7 @@ export default class Game {
     }
 
     if (this.onGround()) {
-      this.gravity = 0;
+      if (this.gravity < 0) this.gravity = 0;
       this.playerPosition.y =
         Math.floor(this.playerPosition.y) + (1 - this.playerSize.height) / 2;
       if (this.jumpQueued) this.gravity = this.jumpHeight;
@@ -186,7 +186,7 @@ export default class Game {
     if (!tiles.find((tile) => tile !== undefined)) return false;
 
     const bottomEdge = this.playerPosition.y + this.playerSize.height / 2;
-    return bottomEdge >= floorRow - 0.5 && bottomEdge <= floorRow + 0.5;
+    return bottomEdge >= floorRow - 0.5 && bottomEdge <= floorRow - 0.2;
   }
 
   keyDown(event: KeyboardEvent) {
