@@ -57,6 +57,7 @@ export default class Game {
       ...new Array(7).fill(new Array(20).fill(tiles.groundBottom)),
     ];
     this.level[7][15] = tiles.flag;
+    this.level[7][5] = tiles.crate;
 
     this.canvas = new GameCanvas(this);
 
@@ -114,7 +115,7 @@ export default class Game {
     const halfPlayerHeight = this.playerSize.height / 2;
     const playerVerticalEdges: [number, number] = [
       this.playerPosition.y - halfPlayerHeight + 0.1,
-      this.playerPosition.y + halfPlayerHeight - 0.1,
+      this.playerPosition.y + halfPlayerHeight - 0.5,
     ];
     for (const column of groundRange) {
       for (let row = 0; row < this.level.length; row++) {
@@ -124,6 +125,12 @@ export default class Game {
         if (overlapping(playerVerticalEdges, tileVerticalEdges)) {
           if (tile[0] == tiles.flag[0]) {
             alert("You win!");
+          } else {
+            if (this.movementMomentum > 0)
+              this.playerPosition.x = column - 0.5 - halfPlayerWidth;
+            else if (this.movementMomentum < 0)
+              this.playerPosition.x = column + 0.5 + halfPlayerWidth;
+            this.movementMomentum = 0;
           }
         }
       }
