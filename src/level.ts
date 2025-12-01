@@ -21,7 +21,7 @@ function platform(width: number) {
 }
 
 export const level: Level = [
-  ...new Array(4).fill(t(40, undefined)),
+  ...new Array(4).fill(t(41, undefined)),
   [...t(22, undefined), ...ground(2), ...t(16, undefined)],
   [
     ...t(16, undefined),
