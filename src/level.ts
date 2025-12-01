@@ -20,7 +20,7 @@ function platform(width: number) {
   ];
 }
 
-const level: Level = [
+export const level: Level = [
   ...new Array(4).fill(t(40, undefined)),
   [...t(22, undefined), ...ground(2), ...t(16, undefined)],
   [
@@ -55,7 +55,22 @@ const level: Level = [
   ],
 ];
 
-export default level;
+export const background: Level = [
+  ...new Array(6).fill(t(40, undefined)),
+  [
+    tiles.tree,
+    ...t(6, undefined),
+    ...t(2, tiles.bush),
+    ...t(10, undefined),
+    tiles.bush,
+    ...t(10, undefined),
+    tiles.tree,
+    ...t(4, undefined),
+    tiles.tree,
+    ...t(5, undefined),
+  ],
+  ...new Array(2).fill(t(40, undefined)),
+];
 
 //
 //
@@ -64,5 +79,5 @@ export default level;
 //
 //                       GG
 //                 PP    GG
-//                       GG              F
+// T      BB          B  GG      T    T  F
 // GGGGGGGGGGG   GGGGGGGGGGGG   GGGGGGGGGGG

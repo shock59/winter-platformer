@@ -39,7 +39,28 @@ export default class GameCanvas {
 
     this.animationFrame += delta / this.animationSpeed;
 
-    for (const [rowIndex, row] of this.game.level.entries()) {
+    this.drawLevel(this.game.background, scale);
+    this.drawLevel(this.game.level, scale);
+
+    const image = new Image();
+    image.src = `assets/player.png`;
+    this.ctx.drawImage(
+      image,
+      (this.viewDimensions[0] / 2 -
+        this.game.playerSize.width / 2 -
+        this.game.cameraOffset.x) *
+        scale,
+      (this.viewDimensions[1] / 2 -
+        this.game.playerSize.height / 2 -
+        this.game.cameraOffset.y) *
+        scale,
+      scale * this.game.playerSize.width,
+      scale * this.game.playerSize.height
+    );
+  }
+
+  drawLevel(level: Level, scale: number) {
+    for (const [rowIndex, row] of level.entries()) {
       for (const [columnIndex, tile] of row.entries()) {
         if (tile == undefined) continue;
 
@@ -68,21 +89,5 @@ export default class GameCanvas {
         );
       }
     }
-
-    const image = new Image();
-    image.src = `assets/player.png`;
-    this.ctx.drawImage(
-      image,
-      (this.viewDimensions[0] / 2 -
-        this.game.playerSize.width / 2 -
-        this.game.cameraOffset.x) *
-        scale,
-      (this.viewDimensions[1] / 2 -
-        this.game.playerSize.height / 2 -
-        this.game.cameraOffset.y) *
-        scale,
-      scale * this.game.playerSize.width,
-      scale * this.game.playerSize.height
-    );
   }
 }

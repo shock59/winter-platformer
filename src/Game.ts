@@ -2,10 +2,11 @@ import GameCanvas from "./GameCanvas";
 import tiles from "./tiles";
 import overlapping from "./overlapping";
 import setCameraOffset from "./setCameraOffset";
-import level from "./level";
+import { background, level } from "./level";
 
 export default class Game {
   level: Level;
+  background: Level;
   canvas: GameCanvas;
 
   playerPosition: Position;
@@ -44,6 +45,7 @@ export default class Game {
 
   constructor() {
     this.level = level;
+    this.background = background;
 
     this.canvas = new GameCanvas(this);
 
