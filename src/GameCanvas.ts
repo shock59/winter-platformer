@@ -16,6 +16,7 @@ export default class GameCanvas {
 
   snowflakes: Position[] = [];
   nextSnowflakeSpawnFrame: number = 1;
+  snowflakeFallSpeed = 0.002;
 
   constructor(game: Game) {
     this.game = game;
@@ -61,7 +62,7 @@ export default class GameCanvas {
         scale
       );
 
-      this.snowflakes[snowflakeIndex].y += delta / 500;
+      this.snowflakes[snowflakeIndex].y += delta * this.snowflakeFallSpeed;
     }
 
     this.drawLevel(this.game.background, scale);
