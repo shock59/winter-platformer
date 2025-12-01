@@ -113,16 +113,18 @@ export default class Game {
     const halfViewDimensions = this.canvas.viewDimensions.map(
       (dimension) => dimension / 2
     );
-    this.cameraOffset.x = setCameraOffset(
-      this.playerPosition.x,
-      halfViewDimensions[0],
-      this.cameraBounds.x
-    );
-    this.cameraOffset.y = setCameraOffset(
-      this.playerPosition.y,
-      halfViewDimensions[1],
-      this.cameraBounds.y
-    );
+    this.cameraOffset = {
+      x: setCameraOffset(
+        this.playerPosition.x,
+        halfViewDimensions[0],
+        this.cameraBounds.x
+      ),
+      y: setCameraOffset(
+        this.playerPosition.y,
+        halfViewDimensions[1],
+        this.cameraBounds.y
+      ),
+    };
     this.canvas.frame(delta);
 
     requestAnimationFrame(() => this.frame());
