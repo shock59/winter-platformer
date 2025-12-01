@@ -71,13 +71,3 @@ export const background: Level = [
   ],
   ...new Array(2).fill(t(40, undefined)),
 ];
-
-//
-//
-//
-//
-//
-//                       GG
-//                 PP    GG
-// T      BB          B  GG      T    T  F
-// GGGGGGGGGGG   GGGGGGGGGGGG   GGGGGGGGGGG
