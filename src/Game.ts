@@ -99,6 +99,36 @@ export default class Game {
 
     this.playerPosition.x += this.movementMomentum * delta;
 
+    const halfPlayerWidth = this.playerSize.width / 2;
+    const playerHorizontalEdges: [number, number] = [
+      this.playerPosition.x - halfPlayerWidth,
+      this.playerPosition.x + halfPlayerWidth,
+    ];
+    let groundRange: number[] = [];
+    for (let column = 0; column < this.level[0].length; column++) {
+      const columnEdges: [number, number] = [column - 0.5, column + 0.5];
+      if (overlapping(playerHorizontalEdges, columnEdges))
+        groundRange.push(column);
+    }
+
+    const halfPlayerHeight = this.playerSize.height / 2;
+    const playerVerticalEdges: [number, number] = [
+      this.playerPosition.y - halfPlayerHeight + 0.1,
+      this.playerPosition.y + halfPlayerHeight - 0.1,
+    ];
+    for (const column of groundRange) {
+      for (let row = 0; row < this.level.length; row++) {
+        const tile = this.level[row][column];
+        if (tile == undefined) continue;
+        const tileVerticalEdges: [number, number] = [row - 0.5, row + 0.5];
+        if (overlapping(playerVerticalEdges, tileVerticalEdges)) {
+          if (tile[0] == tiles.flag[0]) {
+            alert("You win!");
+          }
+        }
+      }
+    }
+
     if (this.onGround()) {
       this.gravity = 0;
       this.playerPosition.y =
