@@ -4,3 +4,5 @@ type Position = {
 };
 
 type AtlasPosition = [number, number];
+
+type Level = (AtlasPosition[] | undefined)[][];
