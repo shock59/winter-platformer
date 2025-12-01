@@ -170,7 +170,12 @@ export default class Game {
       if (overlapping(rowEdges, columnEdges)) groundRange.push(column);
     }
 
-    const tiles = groundRange.map((column) => this.level[floorRow][column]);
+    const aboveRow =
+      this.level[floorRow - 1] ??
+      new Array(this.level[0].length).fill(undefined);
+    const tiles = groundRange.map((column) =>
+      aboveRow[column] == undefined ? this.level[floorRow][column] : undefined
+    );
     if (!tiles.find((tile) => tile !== undefined)) return false;
 
     const bottomEdge = this.playerPosition.y + this.playerSize.height / 2;
