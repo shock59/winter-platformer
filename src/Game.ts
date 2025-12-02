@@ -55,6 +55,10 @@ export default class Game {
     document.addEventListener("keydown", (e) => this.keyDown(e));
     document.addEventListener("keyup", (e) => this.keyUp(e));
 
+    alert(
+      "Welcome to winter platformer!\n\nControls:\nLeft and Right arrows to move\nC to jump"
+    );
+
     this.lastTime = Date.now();
     requestAnimationFrame(() => this.frame());
   }
